@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FILMEO - Admin Séries</title>
+
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+  <link rel="stylesheet" th:href="@{/css/admin-crud.css}">
+</head>
+
+<body>
+<div class="page">
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/home" style="text-decoration:none;color:inherit;">FILMEO</a>
+
+      <nav class="topnav">
+        <a href="/home">Catalogue</a>
+        <a href="/films">Films</a>
+        <a href="/series">Séries</a>
+        <a href="/persons">Personnes</a>
+        <a class="active" href="/admin">Admin</a>
+      </nav>
+
+      <div class="topbar-right">
+        <a class="profile" href="/profile" title="Profil">
+          <span class="avatar"></span>
+          <span class="profile-text">Profil</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-page">
+
+    <section class="admin-head">
+      <div>
+        <div class="pill">📺 Admin</div>
+        <h1>Séries</h1>
+        <p class="subtitle">Créer, modifier et supprimer des séries</p>
+      </div>
+
+      <div class="admin-head-actions">
+        <a class="primary-link" href="/admin/series/new">+ Ajouter</a>
+        <a class="ghost-link" href="/admin">← Dashboard</a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Liste</div>
+        <div class="panel-meta" th:text="${#lists.size(series)} + ' série(s)'">0 série(s)</div>
+      </div>
+
+      <div class="table">
+        <div class="row row-head" style="grid-template-columns: 1.6fr .8fr .8fr 1fr;">
+          <div>Série</div>
+          <div>Saisons</div>
+          <div>Épisodes</div>
+          <div class="right">Actions</div>
+        </div>
+
+        <p class="empty" th:if="${series == null or #lists.isEmpty(series)}">
+          Aucune série. Ajoute-en une !
+        </p>
+
+        <div class="row" th:each="s : ${series}" style="grid-template-columns: 1.6fr .8fr .8fr 1fr;">
+          <div class="cover">
+            <span class="thumb"
+                  th:style="'background-image:url(' + (${s.posterUrl} != null ? ${s.posterUrl} : '/images/placeholders/poster.png') + ')'"></span>
+            <div class="cover-text">
+              <div class="name" th:text="${s.title}">Titre</div>
+              <div class="muted" th:text="${s.status != null ? s.status : '—'}">—</div>
+            </div>
+          </div>
+
+          <div th:text="${s.seasonsCount != null ? s.seasonsCount : '—'}">—</div>
+          <div th:text="${s.episodesCount != null ? s.episodesCount : '—'}">—</div>
+
+          <div class="right actions">
+            <a class="mini-link" th:href="@{/admin/series/edit/{id}(id=${s.id})}">Modifier</a>
+
+            <form th:action="@{/admin/series/delete/{id}(id=${s.id})}" method="post" style="margin:0;">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+              <button class="danger-mini" type="submit">Supprimer</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>

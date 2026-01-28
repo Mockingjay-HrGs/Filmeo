@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FILMEO - Admin Personne</title>
+
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+  <link rel="stylesheet" th:href="@{/css/admin-forms.css}">
+</head>
+
+<body>
+<div class="page">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/home" style="text-decoration:none;color:inherit;">FILMEO</a>
+
+      <nav class="topnav">
+        <a href="/home">Catalogue</a>
+        <a href="/films">Films</a>
+        <a href="/series">Séries</a>
+        <a href="/persons">Personnes</a>
+        <a class="active" href="/admin">Admin</a>
+      </nav>
+
+      <div class="topbar-right">
+        <a class="profile" href="/profile" title="Profil">
+          <span class="avatar"></span>
+          <span class="profile-text">Profil</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-page">
+
+    <section class="admin-head">
+      <div>
+        <div class="pill">✍️ Formulaire</div>
+        <h1 th:text="${person.id != null ? 'Modifier une personne' : 'Créer une personne'}">Créer une personne</h1>
+        <p class="subtitle">Remplis les infos principales (tu pourras compléter plus tard)</p>
+      </div>
+
+      <div class="admin-head-actions">
+        <a class="ghost-link" href="/admin/persons">← Retour</a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <form class="form"
+            th:action="${person.id != null} ? @{/admin/persons/{id}/edit(id=${person.id})} : @{/admin/persons/create}"
+            method="post">
+
+        <div class="grid">
+          <div class="field">
+            <label>Prénom</label>
+            <input name="firstName" th:value="${person.firstName}" placeholder="Ex: Ryan" required>
+          </div>
+
+          <div class="field">
+            <label>Nom</label>
+            <input name="lastName" th:value="${person.lastName}" placeholder="Ex: Gosling" required>
+          </div>
+
+          <div class="field">
+            <label>Date de naissance</label>
+            <input type="date" name="birthDate" th:value="${person.birthDate}">
+          </div>
+
+          <div class="field">
+            <label>Date de décès</label>
+            <input type="date" name="deathDate" th:value="${person.deathDate}">
+          </div>
+
+          <div class="field">
+            <label>Genre</label>
+            <select name="gender">
+              <option value="" th:selected="${person.gender == null}">—</option>
+              <option value="M" th:selected="${person.gender == 'M'}">M</option>
+              <option value="F" th:selected="${person.gender == 'F'}">F</option>
+              <option value="Other" th:selected="${person.gender == 'Other'}">Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Pays</label>
+            <select name="countryId">
+              <option value="" th:selected="${person.country == null}">—</option>
+              <option th:each="c : ${countries}"
+                      th:value="${c.id}"
+                      th:text="${c.name}"
+                      th:selected="${person.country != null and person.country.id == c.id}">
+                France
+              </option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label>Photo URL</label>
+            <input name="photoUrl" th:value="${person.photoUrl}" placeholder="https://...">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="primary-btn" type="submit"
+                  th:text="${person.id != null ? 'Enregistrer' : 'Créer'}">Créer</button>
+          <a class="ghost-link" href="/admin/persons">Annuler</a>
+        </div>
+
+      </form>
+    </section>
+
+  </main>
+
+</div>
+</body>
+</html>

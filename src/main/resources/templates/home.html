@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FILMEO - Catalogue</title>
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+
+<body>
+<div class="page">
+
+  <!-- HEADER (desktop) -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/home" style="text-decoration:none;color:inherit;">FILMEO</a>
+
+      <nav class="topnav">
+        <a class="active" href="/home">Catalogue</a>
+        <a href="/films">Films</a>
+        <a href="/series">Séries</a>
+        <a href="/persons">Personnes</a>
+        <a href="/admin" sec:authorize="hasRole('ADMIN')">Admin</a>
+      </nav>
+
+      <div class="topbar-right">
+        <a class="profile" href="/profile" title="Profil">
+          <span class="avatar"></span>
+          <span class="profile-text">Profil</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+      <h1>Découvrez, notez et gardez<br>votre liste à voir.</h1>
+
+      <!-- (Optionnel) Search plus tard -->
+      <form class="search" action="#" method="get">
+        <div class="searchbox">
+          <span class="search-icon">🔍</span>
+          <input type="text" name="q" placeholder="Rechercher un film ou une série..." />
+        </div>
+        <button type="submit" class="btn">Rechercher</button>
+      </form>
+    </section>
+
+    <!-- FILMS -->
+    <section class="block">
+      <div class="block-head">
+        <h2>Films</h2>
+        <a class="seeall" href="/films">voir tout →</a>
+      </div>
+
+      <div class="cards">
+        <p class="empty" th:if="${films == null or #lists.isEmpty(films)}">
+          Aucun film pour l’instant.
+        </p>
+
+        <article class="card" th:each="f : ${films}" th:if="${f != null}">
+          <a th:href="@{/film/{id}(id=${f.id})}" style="text-decoration:none;color:inherit;">
+            <div class="poster"
+                 th:style="'background-image:url(' +
+                    (${f.posterUrl} != null ? ${f.posterUrl} : '/images/placeholders/poster.png')
+                 + ')'">
+            </div>
+          </a>
+
+          <div class="card-body">
+            <div class="title" th:text="${f.title}">Titre</div>
+
+            <div class="meta" th:if="${f.director != null}">
+              Réal : <span th:text="${f.director.fullName}">Nom</span>
+            </div>
+
+            <div class="row">
+              <form th:action="@{/watchlist/films/add/{id}(id=${f.id})}" method="post" style="margin:0;">
+                <button class="mini-btn" type="submit">+ À voir</button>
+              </form>
+
+              <div class="rate" th:if="${f.rating != null}">
+                ★ <span th:text="${f.rating}">8.0</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SERIES -->
+    <section class="block">
+      <div class="block-head">
+        <h2>Séries</h2>
+        <a class="seeall" href="/series">voir tout →</a>
+      </div>
+
+      <div class="cards">
+        <p class="empty" th:if="${series == null or #lists.isEmpty(series)}">
+          Aucune série pour l’instant.
+        </p>
+
+        <article class="card" th:each="s : ${series}" th:if="${s != null}">
+          <a th:href="@{/serie/{id}(id=${s.id})}" style="text-decoration:none;color:inherit;">
+            <div class="poster"
+                 th:style="'background-image:url(' +
+                    (${s.posterUrl} != null ? ${s.posterUrl} : '/images/placeholders/poster.png')
+                 + ')'">
+            </div>
+          </a>
+
+          <div class="card-body">
+            <div class="title" th:text="${s.title}">Titre</div>
+
+            <div class="row">
+              <form th:action="@{/watchlist/series/add/{id}(id=${s.id})}" method="post" style="margin:0;">
+                <button class="mini-btn" type="submit">+ À voir</button>
+              </form>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAV (mobile only) -->
+  <nav class="bottomnav">
+    <a class="active" href="/home">Home</a>
+    <a href="/films">Films</a>
+    <a href="/profile">Profil</a>
+  </nav>
+
+</div>
+</body>
+</html>

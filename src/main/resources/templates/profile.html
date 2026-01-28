@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FILMEO - Profil</title>
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+
+<body>
+<div class="page">
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/home" style="text-decoration:none;">FILMEO</a>
+
+      <nav class="topnav">
+        <a href="/home">Catalogue</a>
+        <a href="/films">Films</a>
+        <a href="/series">Séries</a>
+        <a href="/persons">Personnes</a>
+      </nav>
+
+      <div class="topbar-right">
+        <a class="profile" href="/profile">
+          <span class="avatar"></span>
+          <span class="profile-text">Profil</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero" style="padding:20px;">
+      <h1 style="margin-bottom:10px;">Mon profil</h1>
+      <p class="meta" style="margin:0;">Gère ton compte et ta watchlist.</p>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <h2>Informations</h2>
+      </div>
+
+      <div class="cards" style="grid-template-columns: 1fr;">
+        <article class="card" style="max-width:760px;">
+          <div class="card-body">
+
+            <div class="title" th:text="${user.pseudo}">Pseudo</div>
+            <div class="meta" th:text="${user.email}">email</div>
+
+            <div class="row" style="margin-top:10px; justify-content:space-between;">
+              <div class="meta">
+                Rôle :
+                <strong th:text="${user.role}">ROLE_USER</strong>
+              </div>
+
+              <div class="meta">
+                Compte :
+                <span th:text="${user.enabled} ? 'Actif' : 'Désactivé'">Actif</span>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:14px; gap:10px; justify-content:flex-start; flex-wrap:wrap;">
+              <a class="mini-btn" href="/logout" style="text-decoration:none;">Se déconnecter</a>
+
+              <a class="mini-btn" th:if="${isAdmin}" href="/admin" style="text-decoration:none;">
+                Admin Dashboard
+              </a>
+            </div>
+
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <h2>Ma watchlist</h2>
+      </div>
+
+      <h3 style="margin:10px 0;">Films</h3>
+      <div class="cards">
+        <p class="empty" th:if="${#lists.isEmpty(watchlistFilms)}">Aucun film dans ta watchlist.</p>
+
+        <article class="card" th:each="wf : ${watchlistFilms}">
+          <div class="poster"
+               th:style="'background-image:url(' + (${wf.film.posterUrl} != null ? ${wf.film.posterUrl} : '/images/placeholders/poster.png') + ')'">
+          </div>
+
+          <div class="card-body">
+            <a class="title" th:href="@{/film/{id}(id=${wf.film.id})}" th:text="${wf.film.title}"
+               style="text-decoration:none;color:inherit;">Film</a>
+
+            <div class="row">
+              <form th:action="@{/watchlist/films/remove/{id}(id=${wf.film.id})}" method="post" style="margin:0;">
+                <button class="mini-btn" type="submit">Retirer</button>
+              </form>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <h3 style="margin:20px 0 10px;">Séries</h3>
+      <div class="cards">
+        <p class="empty" th:if="${#lists.isEmpty(watchlistSeries)}">Aucune série dans ta watchlist.</p>
+
+        <article class="card" th:each="ws : ${watchlistSeries}">
+          <div class="poster"
+               th:style="'background-image:url(' + (${ws.serie.posterUrl} != null ? ${ws.serie.posterUrl} : '/images/placeholders/poster.png'} + ')'">
+          </div>
+
+          <div class="card-body">
+            <a class="title" th:href="@{/serie/{id}(id=${ws.serie.id})}" th:text="${ws.serie.title}"
+               style="text-decoration:none;color:inherit;">Série</a>
+
+            <div class="row">
+              <form th:action="@{/watchlist/series/remove/{id}(id=${ws.serie.id})}" method="post" style="margin:0;">
+                <button class="mini-btn" type="submit">Retirer</button>
+              </form>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+  </main>
+</div>
+</body>
+</html>

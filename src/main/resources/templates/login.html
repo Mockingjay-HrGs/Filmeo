@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FILMEO - Connexion</title>
+  <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Connexion</h1>
+
+    <p class="auth-msg ok" th:if="${param.registered}">
+      Compte créé ! Tu peux te connecter.
+    </p>
+
+    <p class="auth-msg error" th:if="${param.error}">
+      Identifiants invalides.
+    </p>
+
+    <p class="auth-msg ok" th:if="${param.logout}">
+      Déconnecté.
+    </p>
+
+    <form th:action="@{/login}" method="post">
+      <div class="field">
+        <label for="username">Pseudo</label>
+        <input id="username" name="username" required>
+      </div>
+
+      <div class="field">
+        <label for="password">Mot de passe</label>
+        <input id="password" name="password" type="password" required>
+      </div>
+
+      <button class="btn" type="submit">Se connecter</button>
+    </form>
+
+    <p class="auth-footer">
+      Pas de compte ? <a th:href="@{/register}">S’inscrire</a>
+    </p>
+  </div>
+</div>
+
+</body>
+</html>

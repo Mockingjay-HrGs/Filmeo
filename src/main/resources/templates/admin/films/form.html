@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FILMEO - Admin Film</title>
+
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+  <link rel="stylesheet" th:href="@{/css/admin-crud.css}">
+</head>
+
+<body>
+<div class="page">
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/home" style="text-decoration:none;color:inherit;">FILMEO</a>
+
+      <nav class="topnav">
+        <a href="/home">Catalogue</a>
+        <a href="/films">Films</a>
+        <a href="/series">Séries</a>
+        <a href="/persons">Personnes</a>
+        <a class="active" href="/admin">Admin</a>
+      </nav>
+
+      <div class="topbar-right">
+        <a class="profile" href="/profile" title="Profil">
+          <span class="avatar"></span>
+          <span class="profile-text">Profil</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-page">
+
+    <section class="admin-head">
+      <div>
+        <div class="pill">✍️ Formulaire</div>
+        <h1 th:text="${film.id != null ? 'Modifier un film' : 'Créer un film'}">Créer un film</h1>
+        <p class="subtitle">Titre, affiche, sortie, note, réalisateur</p>
+      </div>
+
+      <div class="admin-head-actions">
+        <a class="ghost-link" href="/admin/films">← Retour</a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <form class="form"
+            method="post"
+            th:action="${film.id != null} ? @{/admin/films/edit/{id}(id=${film.id})} : @{/admin/films/new}">
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+        <div class="grid">
+          <div class="field full">
+            <label>Titre</label>
+            <input name="title" th:value="${film.title}" required placeholder="Ex: Inception">
+          </div>
+
+          <div class="field">
+            <label>Date de sortie</label>
+            <input type="date" name="releaseDate" th:value="${film.releaseDate}">
+          </div>
+
+          <div class="field">
+            <label>Note</label>
+            <input type="text" name="rating" th:value="${film.rating}" placeholder="Ex: 8.8">
+          </div>
+
+          <div class="field full">
+            <label>Poster URL</label>
+            <input name="posterUrl" th:value="${film.posterUrl}" placeholder="https://...">
+          </div>
+
+          <div class="field full">
+            <label>Réalisateur</label>
+            <select name="directorId">
+              <option value="">—</option>
+              <option th:each="d : ${directors}"
+                      th:value="${d.id}"
+                      th:text="${d.fullName != null ? d.fullName : (d.firstName + ' ' + d.lastName)}"
+                      th:selected="${film.director != null and film.director.id == d.id}">
+                Nom
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="primary-btn" type="submit"
+                  th:text="${film.id != null ? 'Enregistrer' : 'Créer'}">Créer</button>
+          <a class="ghost-link" href="/admin/films">Annuler</a>
+        </div>
+      </form>
+    </section>
+
+    <!-- CASTING (uniquement en EDIT car tu as besoin du filmId) -->
+    <section class="panel" th:if="${film.id != null}" style="margin-top:14px;">
+      <div class="panel-head">
+        <div class="panel-title">Casting</div>
+        <div class="panel-meta">Gérer les acteurs du film</div>
+      </div>
+
+      <div class="form" style="padding-top:12px;">
+        <!-- Add cast -->
+        <form method="post" th:action="@{/admin/films/cast/add}" class="form">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+          <input type="hidden" name="filmId" th:value="${film.id}">
+
+          <div class="grid">
+            <div class="field full">
+              <label>Acteur</label>
+              <select name="personId" required>
+                <option value="">—</option>
+                <option th:each="a : ${actors}"
+                        th:value="${a.id}"
+                        th:text="${a.fullName != null ? a.fullName : (a.firstName + ' ' + a.lastName)}">
+                  Nom
+                </option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label>Nom du personnage</label>
+              <input name="characterName" placeholder="Ex: Neo">
+            </div>
+
+            <div class="field">
+              <label>Rôle principal</label>
+              <select name="main">
+                <option value="false" selected>Non</option>
+                <option value="true">Oui</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="primary-btn" type="submit">+ Ajouter au casting</button>
+          </div>
+        </form>
+
+        <!-- List cast -->
+        <div class="table" style="padding: 10px 0 0;">
+          <div class="row row-head" style="grid-template-columns: 1.6fr 1fr 1fr;">
+            <div>Personne</div>
+            <div>Personnage</div>
+            <div class="right">Actions</div>
+          </div>
+
+          <p class="empty" th:if="${castings == null or #lists.isEmpty(castings)}">Aucun casting.</p>
+
+          <div class="row" th:each="c : ${castings}" style="grid-template-columns: 1.6fr 1fr 1fr;">
+            <div class="cover">
+              <span class="thumb"
+                    th:style="'background-image:url(' + (${c.person.photoUrl} != null ? ${c.person.photoUrl} : '/images/placeholders/person.png') + ')'"></span>
+              <div class="cover-text">
+                <div class="name" th:text="${c.person.fullName}">Nom</div>
+                <div class="muted" th:text="${c.main ? 'Principal' : 'Secondaire'}">—</div>
+              </div>
+            </div>
+
+            <div th:text="${c.characterName != null ? c.characterName : '—'}">—</div>
+
+            <div class="right actions">
+              <form method="post" th:action="@{/admin/films/cast/delete}" style="margin:0;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="hidden" name="filmId" th:value="${film.id}">
+                <input type="hidden" name="personId" th:value="${c.person.id}">
+                <button class="danger-mini" type="submit">Supprimer</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>

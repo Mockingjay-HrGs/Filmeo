@@ -1,0 +1,152 @@
+/* ========== list.css (films & séries) ========== */
+
+.list-hero{
+    display:flex;
+    flex-direction:column;
+    gap: 14px;
+    padding: 10px 0 6px;
+}
+
+.list-hero h1{
+    margin: 0;
+    font-size: clamp(26px, 5vw, 42px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+}
+
+.subtitle{
+    margin: 8px 0 0;
+    color: rgba(255,255,255,.65);
+    font-weight: 600;
+}
+
+/* Search bar */
+.searchbar{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items:center;
+    padding: 10px 12px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+}
+
+.search-icon{ opacity: .9; }
+
+.searchbar input{
+    flex: 1;
+    min-width: 220px;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: rgba(255,255,255,.92);
+    font-weight: 700;
+    padding: 10px 6px;
+}
+
+.search-btn{
+    border: 0;
+    cursor: pointer;
+    border-radius: 999px;
+    padding: 10px 14px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #e50914, #ff3b30);
+    color: rgba(255,255,255,.95);
+    box-shadow: 0 16px 34px rgba(229,9,20,.16);
+    transition: transform .15s ease, filter .15s ease;
+}
+.search-btn:hover{ transform: translateY(-1px); filter: brightness(1.06); }
+
+.clear-btn{
+    text-decoration:none;
+    border-radius: 999px;
+    padding: 10px 14px;
+    font-weight: 900;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.90);
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+.clear-btn:hover{
+    transform: translateY(-1px);
+    background: rgba(255,255,255,.08);
+    border-color: rgba(229,9,20,.30);
+}
+
+/* Grid cards */
+.grid{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.tile{
+    border-radius: 22px;
+    overflow:hidden;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 14px 40px rgba(0,0,0,.35);
+    transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    display:flex;
+    flex-direction:column;
+}
+.tile:hover{
+    transform: translateY(-3px);
+    border-color: rgba(229,9,20,.28);
+    background: rgba(255,255,255,.05);
+}
+
+.tile-link{
+    display:block;
+    text-decoration:none;
+    color: inherit;
+}
+
+.tile-poster{
+    width:100%;
+    aspect-ratio: 2 / 3;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(255,255,255,.06);
+}
+
+.tile-body{
+    padding: 10px 12px 8px;
+    display:flex;
+    flex-direction:column;
+    gap: 6px;
+}
+
+.tile-title{
+    font-weight: 900;
+    line-height: 1.25;
+    display:-webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow:hidden;
+}
+
+.tile-meta{
+    color: rgba(255,255,255,.62);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+/* action button */
+.tile-action{
+    padding: 0 12px 12px;
+}
+
+@media (min-width: 560px){
+    .grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 900px){
+    .list-hero{ flex-direction: row; align-items:flex-end; justify-content:space-between; }
+    .grid{ grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+}

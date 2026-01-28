@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="'FILMEO - ' + ${serie.title}">FILMEO - Série</title>
+
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+  <link rel="stylesheet" th:href="@{/css/serie.css}">
+</head>
+
+<body>
+<div class="page">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/home" style="text-decoration:none;color:inherit;">FILMEO</a>
+
+      <nav class="topnav">
+        <a href="/home">Catalogue</a>
+        <a href="/films">Films</a>
+        <a class="active" href="/series">Séries</a>
+        <a href="/persons">Personnes</a>
+        <a href="/admin" sec:authorize="hasRole('ADMIN')">Admin</a>
+      </nav>
+
+      <div class="topbar-right">
+        <a class="profile" href="/profile" title="Profil">
+          <span class="avatar"></span>
+          <span class="profile-text">Profil</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- SERIE HERO -->
+    <section class="serie-hero">
+
+      <button class="back-btn" type="button" onclick="history.back()">← Retour</button>
+
+      <div class="serie-card">
+
+        <div class="serie-poster">
+          <img th:src="${serie.posterUrl != null ? serie.posterUrl : '/images/placeholders/poster.png'}"
+               alt="Affiche"
+               loading="lazy">
+        </div>
+
+        <div class="serie-info">
+          <h1 th:text="${serie.title}">Titre</h1>
+
+          <div class="chips">
+            <span class="chip" th:if="${serie.seasonsCount != null}">
+              <span th:text="${serie.seasonsCount}">0</span> saisons
+            </span>
+
+            <span class="chip" th:if="${serie.episodesCount != null}">
+              <span th:text="${serie.episodesCount}">0</span> épisodes
+            </span>
+
+            <span class="chip chip-accent" th:if="${serie.status != null}">
+              ⏺ <span th:text="${serie.status}">Ongoing</span>
+            </span>
+          </div>
+
+          <div class="actions">
+            <!-- Si tu as une vraie route watchlist série, remplace le href par ton th:action form -->
+            <button class="primary-btn" type="button">+ Ajouter à la watchlist</button>
+            <a class="ghost-btn" th:href="@{/series}">← Retour aux séries</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAV (mobile only) -->
+  <nav class="bottomnav">
+    <a href="/home">Home</a>
+    <a class="active" href="/series">Séries</a>
+    <a href="/profile">Profil</a>
+  </nav>
+
+</div>
+</body>
+</html>

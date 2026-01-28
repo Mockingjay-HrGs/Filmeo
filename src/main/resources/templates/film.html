@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="'FILMEO - ' + ${film.title}">FILMEO - Film</title>
+
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+  <link rel="stylesheet" th:href="@{/css/film.css}">
+</head>
+
+<body>
+<div class="page">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/home" style="text-decoration:none;color:inherit;">FILMEO</a>
+
+      <nav class="topnav">
+        <a href="/home">Catalogue</a>
+        <a class="active" href="/films">Films</a>
+        <a href="/series">Séries</a>
+        <a href="/persons">Personnes</a>
+        <a href="/admin" sec:authorize="hasRole('ADMIN')">Admin</a>
+      </nav>
+
+      <div class="topbar-right">
+        <a class="profile" href="/profile" title="Profil">
+          <span class="avatar"></span>
+          <span class="profile-text">Profil</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- FILM HERO -->
+    <section class="film-hero">
+
+      <button class="back-btn" type="button" onclick="history.back()">← Retour</button>
+
+      <div class="film-card">
+
+        <div class="film-poster">
+          <img th:src="${film.posterUrl != null ? film.posterUrl : '/images/placeholders/poster.png'}"
+               alt="Affiche"
+               loading="lazy">
+        </div>
+
+        <div class="film-info">
+          <h1 th:text="${film.title}">Titre</h1>
+
+          <div class="chips">
+            <span class="chip" th:if="${film.releaseDate != null}">
+              📅 <span th:text="${film.releaseDate}">2024</span>
+            </span>
+
+            <span class="chip chip-accent" th:if="${film.rating != null}">
+              ★ <span th:text="${film.rating}">8.8</span>
+            </span>
+          </div>
+
+          <div class="line" th:if="${film.director != null}">
+            <span class="label">Réalisateur</span>
+            <a class="link"
+               th:href="@{/person/{id}(id=${film.director.id})}"
+               th:text="${film.director.fullName}">
+              Nom
+            </a>
+          </div>
+
+          <div class="actions">
+            <form th:action="@{/watchlist/films/add/{id}(id=${film.id})}" method="post" style="margin:0;">
+              <button class="primary-btn" type="submit">+ Ajouter à ma liste</button>
+            </form>
+
+            <a class="ghost-btn" href="/films">Voir tous les films</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CASTING -->
+    <section class="block">
+      <div class="block-head">
+        <h2>Casting</h2>
+      </div>
+
+      <div class="cast-grid">
+        <p class="empty" th:if="${#lists.isEmpty(cast)}">Aucun casting renseigné.</p>
+
+        <article class="cast-card" th:each="c : ${cast}">
+          <a class="cast-link" th:href="@{/person/{id}(id=${c.person.id})}">
+            <div class="cast-photo">
+              <img th:src="${c.person.photoUrl != null ? c.person.photoUrl : '/images/placeholders/person.png'}"
+                   alt="Photo"
+                   loading="lazy">
+            </div>
+
+            <div class="cast-body">
+              <div class="cast-name" th:text="${c.person.fullName}">Personne</div>
+              <div class="cast-meta" th:if="${c.person.gender != null}" th:text="${c.person.gender}">M</div>
+            </div>
+          </a>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAV (mobile only) -->
+  <nav class="bottomnav">
+    <a href="/home">Home</a>
+    <a class="active" href="/films">Films</a>
+    <a href="/profile">Profil</a>
+  </nav>
+
+</div>
+</body>
+</html>

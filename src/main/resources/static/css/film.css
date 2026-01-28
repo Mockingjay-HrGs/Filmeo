@@ -1,0 +1,284 @@
+/* ========== FILMEO – film.css (clean, Netflix-like, responsive) ========== */
+
+/* back button (same vibe as other pages) */
+.back-btn{
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.92);
+    border-radius: 999px;
+    padding: 10px 14px;
+    font-weight: 800;
+    cursor:pointer;
+    transition: background .15s ease, transform .15s ease, border-color .15s ease;
+}
+.back-btn:hover{
+    background: rgba(255,255,255,.08);
+    border-color: rgba(229,9,20,.35);
+    transform: translateY(-1px);
+}
+
+/* HERO wrapper */
+.film-hero{
+    display:flex;
+    flex-direction:column;
+    gap: 14px;
+    margin-top: 6px;
+}
+
+/* Main card */
+.film-card{
+    overflow:hidden;
+    border-radius: 22px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 18px 55px rgba(0,0,0,.55);
+    backdrop-filter: blur(12px);
+
+    display:flex;
+    flex-direction:column; /* mobile-first */
+}
+
+/* Poster */
+.film-poster{
+    position:relative;
+    background: rgba(255,255,255,.06);
+    border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+.film-poster img{
+    width:100%;
+    display:block;
+
+    /* ratio affiche */
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* soft gradient */
+.film-poster::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.75) 100%);
+}
+
+/* Info */
+.film-info{
+    padding: 16px 16px 18px;
+    display:flex;
+    flex-direction:column;
+    gap: 12px;
+}
+
+.film-info h1{
+    margin:0;
+    font-size: clamp(24px, 4.8vw, 38px);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+}
+
+/* Chips */
+.chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 10px;
+}
+
+.chip{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.04);
+    color: rgba(255,255,255,.82);
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.chip-accent{
+    border-color: rgba(229,9,20,.35);
+    background: rgba(229,9,20,.16);
+    color: rgba(255,255,255,.92);
+}
+
+/* Line (director) */
+.line{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap: 10px;
+    padding: 12px 12px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.10);
+}
+
+.label{
+    font-weight: 800;
+    color: rgba(255,255,255,.62);
+    font-size: 13px;
+    letter-spacing: .02em;
+}
+
+.link{
+    color: rgba(255,255,255,.92);
+    text-decoration:none;
+    font-weight: 900;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.03);
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+.link:hover{
+    transform: translateY(-1px);
+    background: rgba(255,255,255,.07);
+    border-color: rgba(229,9,20,.28);
+}
+
+/* Actions */
+.actions{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.primary-btn{
+    border:0;
+    cursor:pointer;
+    border-radius: 999px;
+    padding: 12px 14px;
+    font-weight: 900;
+    letter-spacing: .02em;
+    background: linear-gradient(135deg, #e50914, #ff3b30);
+    color: rgba(255,255,255,.95);
+    box-shadow: 0 16px 34px rgba(229,9,20,.18);
+    transition: transform .15s ease, filter .15s ease;
+}
+.primary-btn:hover{ transform: translateY(-1px); filter: brightness(1.06); }
+.primary-btn:active{ transform: translateY(0px); }
+
+.ghost-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    padding: 12px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.90);
+    font-weight: 900;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+.ghost-btn:hover{
+    transform: translateY(-1px);
+    background: rgba(255,255,255,.08);
+    border-color: rgba(229,9,20,.30);
+}
+
+/* CAST GRID (portraits) */
+.cast-grid{
+    display:grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Card */
+.cast-card{
+    border-radius: 22px;
+    overflow:hidden;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 14px 40px rgba(0,0,0,.35);
+    transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.cast-card:hover{
+    transform: translateY(-3px);
+    border-color: rgba(229,9,20,.28);
+    background: rgba(255,255,255,.05);
+}
+
+.cast-link{
+    display:block;
+    text-decoration:none;
+    color: inherit;
+}
+
+.cast-photo{
+    background: rgba(255,255,255,.06);
+}
+.cast-photo img{
+    width:100%;
+    display:block;
+    aspect-ratio: 1 / 1.15; /* portrait clean */
+    object-fit: cover;
+    object-position: center 18%;
+}
+
+.cast-body{
+    padding: 10px 12px 12px;
+    display:flex;
+    flex-direction:column;
+    gap: 6px;
+}
+
+.cast-name{
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 1.25;
+    display:-webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow:hidden;
+}
+
+.cast-meta{
+    color: rgba(255,255,255,.62);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+/* Desktop layout: poster left, info right */
+@media (min-width: 820px){
+    .film-card{
+        flex-direction: row;
+        min-height: 460px;
+    }
+
+    .film-poster{
+        width: 320px;
+        border-bottom: 0;
+        border-right: 1px solid rgba(255,255,255,.10);
+    }
+
+    .film-poster img{
+        height: 100%;
+        aspect-ratio: auto;
+    }
+
+    .film-info{
+        padding: 24px 24px;
+        justify-content:center;
+        flex: 1;
+    }
+
+    .cast-grid{
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1080px){
+    .cast-grid{
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+    *{ transition: none !important; }
+}

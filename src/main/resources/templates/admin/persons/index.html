@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FILMEO - Admin Personnes</title>
+
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+  <link rel="stylesheet" th:href="@{/css/admin-forms.css}">
+</head>
+
+<body>
+<div class="page">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/home" style="text-decoration:none;color:inherit;">FILMEO</a>
+
+      <nav class="topnav">
+        <a href="/home">Catalogue</a>
+        <a href="/films">Films</a>
+        <a href="/series">Séries</a>
+        <a href="/persons">Personnes</a>
+        <a class="active" href="/admin">Admin</a>
+      </nav>
+
+      <div class="topbar-right">
+        <a class="profile" href="/profile" title="Profil">
+          <span class="avatar"></span>
+          <span class="profile-text">Profil</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-page">
+
+    <section class="admin-head">
+      <div>
+        <div class="pill">🧑‍🎤 Admin</div>
+        <h1>Personnes</h1>
+        <p class="subtitle">Créer, modifier et supprimer acteurs / réalisateurs</p>
+      </div>
+
+      <div class="admin-head-actions">
+        <a class="primary-link" href="/admin/persons/create">+ Ajouter</a>
+        <a class="ghost-link" href="/admin">← Dashboard</a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Liste</div>
+        <div class="panel-meta" th:text="${#lists.size(persons)} + ' élément(s)'">0 élément(s)</div>
+      </div>
+
+      <div class="table">
+        <div class="row row-head">
+          <div>Personne</div>
+          <div>Pays</div>
+          <div>Naissance</div>
+          <div class="right">Actions</div>
+        </div>
+
+        <p class="empty" th:if="${persons == null or #lists.isEmpty(persons)}">
+          Aucune personne. Ajoute-en une !
+        </p>
+
+        <div class="row" th:each="p : ${persons}">
+          <div class="who">
+            <span class="thumb"
+                  th:style="'background-image:url(' + (${p.photoUrl} != null ? ${p.photoUrl} : '/images/placeholders/person.png') + ')'"></span>
+            <div class="who-text">
+              <div class="name"
+                   th:text="${p.fullName != null ? p.fullName : (p.firstName + ' ' + p.lastName)}">Nom</div>
+              <div class="muted" th:text="${p.gender != null ? p.gender : '—'}">—</div>
+            </div>
+          </div>
+
+          <div th:text="${p.country != null ? p.country.name : '—'}">—</div>
+          <div th:text="${p.birthDate != null ? p.birthDate : '—'}">—</div>
+
+          <div class="right actions">
+            <a class="mini-link" th:href="@{/admin/persons/{id}/edit(id=${p.id})}">Modifier</a>
+
+            <form th:action="@{/admin/persons/{id}/delete(id=${p.id})}" method="post" style="margin:0;">
+              <button class="danger-mini" type="submit">Supprimer</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+</div>
+</body>
+</html>

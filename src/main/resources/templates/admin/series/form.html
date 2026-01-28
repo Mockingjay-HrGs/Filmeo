@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FILMEO - Admin Série</title>
+
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+  <link rel="stylesheet" th:href="@{/css/admin-crud.css}">
+</head>
+
+<body>
+<div class="page">
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/home" style="text-decoration:none;color:inherit;">FILMEO</a>
+
+      <nav class="topnav">
+        <a href="/home">Catalogue</a>
+        <a href="/films">Films</a>
+        <a href="/series">Séries</a>
+        <a href="/persons">Personnes</a>
+        <a class="active" href="/admin">Admin</a>
+      </nav>
+
+      <div class="topbar-right">
+        <a class="profile" href="/profile" title="Profil">
+          <span class="avatar"></span>
+          <span class="profile-text">Profil</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-page">
+
+    <section class="admin-head">
+      <div>
+        <div class="pill">✍️ Formulaire</div>
+        <h1 th:text="${serie.id != null ? 'Modifier une série' : 'Créer une série'}">Créer une série</h1>
+        <p class="subtitle">Titre, saisons, épisodes, statut, affiche</p>
+      </div>
+
+      <div class="admin-head-actions">
+        <a class="ghost-link" href="/admin/series">← Retour</a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <form class="form"
+            method="post"
+            th:action="${serie.id != null} ? @{/admin/series/edit/{id}(id=${serie.id})} : @{/admin/series/new}">
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+        <div class="grid">
+          <div class="field full">
+            <label>Titre</label>
+            <input name="title" th:value="${serie.title}" required placeholder="Ex: Breaking Bad">
+          </div>
+
+          <div class="field">
+            <label>Saisons</label>
+            <input type="number" min="0" name="seasonsCount" th:value="${serie.seasonsCount}">
+          </div>
+
+          <div class="field">
+            <label>Épisodes</label>
+            <input type="number" min="0" name="episodesCount" th:value="${serie.episodesCount}">
+          </div>
+
+          <div class="field">
+            <label>Statut</label>
+            <input name="status" th:value="${serie.status}" placeholder="Ongoing / Ended">
+          </div>
+
+          <div class="field full">
+            <label>Poster URL</label>
+            <input name="posterUrl" th:value="${serie.posterUrl}" placeholder="https://...">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="primary-btn" type="submit"
+                  th:text="${serie.id != null ? 'Enregistrer' : 'Créer'}">Créer</button>
+          <a class="ghost-link" href="/admin/series">Annuler</a>
+        </div>
+      </form>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>

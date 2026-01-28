@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FILMEO - Inscription</title>
+  <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Inscription</h1>
+
+    <p class="auth-msg error" th:if="${error}" th:text="${error}"></p>
+
+    <form th:action="@{/register}" method="post">
+      <div class="field">
+        <label>Pseudo</label>
+        <input name="pseudo" required>
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input name="email" type="email" required>
+      </div>
+
+      <div class="field">
+        <label>Mot de passe</label>
+        <input name="password" type="password" required>
+      </div>
+
+      <div class="field">
+        <label>Confirmation</label>
+        <input name="confirmPassword" type="password" required>
+      </div>
+
+      <button class="btn" type="submit">Créer le compte</button>
+    </form>
+
+    <p class="auth-footer">
+      Déjà un compte ? <a th:href="@{/login}">Se connecter</a>
+    </p>
+  </div>
+</div>
+
+</body>
+</html>

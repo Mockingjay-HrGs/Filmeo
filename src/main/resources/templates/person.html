@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${person.fullName} + ' – FILMEO'">FILMEO - Personne</title>
+
+  <!-- On réutilise home.css pour la topbar/bottomnav + thème -->
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+  <!-- Et on ajoute un CSS dédié à la page -->
+  <link rel="stylesheet" th:href="@{/css/person.css}">
+</head>
+
+<body>
+<div class="page">
+
+  <!-- TOPBAR (même style que home) -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/home" style="text-decoration:none;color:inherit;">FILMEO</a>
+
+      <nav class="topnav">
+        <a href="/home">Catalogue</a>
+        <a href="/films">Films</a>
+        <a href="/series">Séries</a>
+        <a class="active" href="/persons">Personnes</a>
+        <a href="/admin" sec:authorize="hasRole('ADMIN')">Admin</a>
+      </nav>
+
+      <div class="topbar-right">
+        <a class="profile" href="/profile" title="Profil">
+          <span class="avatar"></span>
+          <span class="profile-text">Profil</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Header page -->
+    <section class="person-head">
+      <button class="back-btn" type="button" onclick="history.back()">← Retour</button>
+      <div class="crumb">Personnes</div>
+    </section>
+
+    <!-- Card layout -->
+    <section class="person-card">
+
+      <!-- Photo -->
+      <div class="person-photo">
+        <img th:src="${person.photoUrl != null ? person.photoUrl : '/images/placeholders/person.png'}"
+             alt="Photo"
+             loading="lazy">
+      </div>
+
+      <!-- Infos -->
+      <div class="person-info">
+        <h1 th:text="${person.fullName}">Nom Prénom</h1>
+
+        <div class="info-grid">
+          <div class="info-item" th:if="${person.birthDate != null}">
+            <div class="label">Date de naissance</div>
+            <div class="value" th:text="${person.birthDate}">1970-01-01</div>
+          </div>
+
+          <div class="info-item" th:if="${person.country != null}">
+            <div class="label">Pays</div>
+            <div class="value" th:text="${person.country.name}">France</div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+          <a class="ghost-btn" href="/persons">← Retour liste</a>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAV (mobile only) -->
+  <nav class="bottomnav">
+    <a href="/home">Home</a>
+    <a href="/films">Films</a>
+    <a class="active" href="/persons">Personnes</a>
+    <a href="/profile">Profil</a>
+  </nav>
+
+</div>
+</body>
+</html>
