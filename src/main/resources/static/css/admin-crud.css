@@ -1,8 +1,5 @@
-/* ========== FILMEO – admin-crud.css (CRUD list + forms) ========== */
-
 .admin-page{ padding-top: 22px; }
 
-/* header */
 .admin-head{
     display:flex;
     flex-direction:column;
@@ -72,7 +69,6 @@
     border-color: rgba(229,9,20,.30);
 }
 
-/* panel */
 .panel{
     margin-top: 16px;
     border-radius: 22px;
@@ -103,7 +99,6 @@
     font-size: 14px;
 }
 
-/* list table */
 .table{ padding: 8px 12px 12px; }
 
 .row{
@@ -126,7 +121,6 @@
 
 .right{ justify-self:end; text-align:right; }
 
-/* cover cell */
 .cover{
     display:flex;
     align-items:center;
@@ -158,7 +152,6 @@
     font-size: 13px;
 }
 
-/* actions */
 .actions{
     display:flex;
     gap: 10px;
@@ -197,7 +190,6 @@
     filter: brightness(1.06);
 }
 
-/* empty */
 .empty{
     margin: 10px 0 0;
     padding: 14px 12px;
@@ -207,7 +199,6 @@
     color: rgba(255,255,255,.70);
 }
 
-/* form */
 .form{ padding: 14px; }
 
 .grid{
@@ -274,7 +265,6 @@
 .primary-btn:hover{ transform: translateY(-1px); filter: brightness(1.06); }
 .primary-btn:active{ transform: translateY(0px); }
 
-/* responsive */
 @media (min-width: 700px){
     .admin-head{ flex-direction: row; align-items:flex-end; justify-content:space-between; }
     .grid{ grid-template-columns: 1fr 1fr; }
@@ -286,7 +276,6 @@
     .actions{ justify-content:flex-start; }
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce){
     *{ transition:none !important; }
 }

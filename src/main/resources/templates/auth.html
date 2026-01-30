@@ -21,7 +21,6 @@
                th:href="@{/auth(tab='register')}">Inscription</a>
         </div>
 
-        <!-- ✅ Messages -->
         <div th:if="${param.error}" class="alert error">Pseudo ou mot de passe incorrect.</div>
         <div th:if="${registered}" class="alert success">Compte créé ✅ Connecte-toi.</div>
         <div th:if="${registerError != null and !#strings.isEmpty(registerError)}"
@@ -29,7 +28,6 @@
              th:text="'Erreur : ' + ${registerError}">
         </div>
 
-        <!-- =================== LOGIN =================== -->
         <form th:action="@{/login}" method="post" id="loginForm" class="form active">
 
             <div class="input-group">
@@ -48,7 +46,6 @@
         </form>
 
 
-        <!-- =================== REGISTER =================== -->
         <section th:if="${activeTab == 'register'}">
             <h1>Inscription</h1>
 

@@ -32,8 +32,8 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logout")              // ✅ POST /logout
-                        .logoutSuccessUrl("/login?logout") // ✅ redirection
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                 );

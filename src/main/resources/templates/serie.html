@@ -14,7 +14,6 @@
 <body>
 <div class="page">
 
-  <!-- TOPBAR -->
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="/home" style="text-decoration:none;color:inherit;">FILMEO</a>
@@ -38,7 +37,6 @@
 
   <main class="container">
 
-    <!-- SERIE HERO -->
     <section class="serie-hero">
 
       <button class="back-btn" type="button" onclick="history.back()">← Retour</button>
@@ -69,7 +67,6 @@
           </div>
 
           <div class="actions">
-            <!-- Si tu as une vraie route watchlist série, remplace le href par ton th:action form -->
             <button class="primary-btn" type="button">+ Ajouter à la watchlist</button>
             <a class="ghost-btn" th:href="@{/series}">← Retour aux séries</a>
           </div>
@@ -80,7 +77,6 @@
 
   </main>
 
-  <!-- BOTTOM NAV (mobile only) -->
   <nav class="bottomnav">
     <a href="/home">Home</a>
     <a class="active" href="/series">Séries</a>

@@ -1,11 +1,7 @@
-/* ========== FILMEO – admin.css (dashboard) ========== */
-
 .admin{
-    /* un peu plus d’air visuel sur dashboard */
     padding-top: 22px;
 }
 
-/* HERO */
 .admin-hero{
     display:flex;
     flex-direction:column;
@@ -45,7 +41,6 @@
     flex-wrap: wrap;
 }
 
-/* Quick buttons */
 .quick-btn{
     text-decoration:none;
     display:inline-flex;
@@ -65,7 +60,6 @@
     border-color: rgba(229,9,20,.30);
 }
 
-/* STATS */
 .stats-grid{
     display:grid;
     grid-template-columns: 1fr;
@@ -126,7 +120,6 @@
     font-size: 14px;
 }
 
-/* ACTION TILES */
 .actions-grid{
     display:grid;
     grid-template-columns: 1fr;
@@ -174,7 +167,6 @@
     color: rgba(255,255,255,.70);
 }
 
-/* DANGER */
 .danger-card{
     border-radius: 22px;
     padding: 14px 14px;
@@ -216,7 +208,6 @@
 }
 .danger-btn:active{ transform: translateY(0px); }
 
-/* RESPONSIVE */
 @media (min-width: 560px){
     .stats-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .actions-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -232,7 +223,6 @@
     .actions-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce){
     *{ transition:none !important; }
 }

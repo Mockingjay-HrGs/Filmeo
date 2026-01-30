@@ -31,14 +31,12 @@ public class PersonController {
         this.filmCastRepository = filmCastRepository;
     }
 
-    // Page : liste de toutes les personnes
     @GetMapping("/persons")
     public String persons(Model model) {
         model.addAttribute("persons", personRepository.findAll());
         return "persons";
     }
 
-    // Page : détail d'une personne
     @GetMapping("/person/{id}")
     public String personDetail(@PathVariable Long id, Model model) {
 
@@ -47,10 +45,8 @@ public class PersonController {
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "Personne introuvable")
                 );
 
-        // Films réalisés
         List<Film> filmsDirected = filmRepository.findByDirector_Id(id);
 
-        // Films joués (via film_cast)
         List<Film> filmsActed = filmCastRepository.findByPerson_Id(id)
                 .stream()
                 .map(fc -> fc.getFilm())

@@ -35,7 +35,6 @@ public class WatchlistController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
     }
 
-    // -------- FILMS ----------
     @PostMapping("/watchlist/films/add/{filmId}")
     public String addFilm(@PathVariable Long filmId, Authentication auth) {
         User user = currentUser(auth);
@@ -62,7 +61,6 @@ public class WatchlistController {
         return "redirect:/profile";
     }
 
-    // -------- SERIES ----------
     @PostMapping("/watchlist/series/add/{serieId}")
     public String addSerie(@PathVariable Long serieId, Authentication auth) {
         User user = currentUser(auth);

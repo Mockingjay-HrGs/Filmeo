@@ -1,8 +1,6 @@
-/* ========== Admin list + forms (reusable) ========== */
-
 .admin-page{ padding-top: 22px; }
 
-/* header */
+
 .admin-head{
     display:flex;
     flex-direction:column;
@@ -72,7 +70,6 @@
     border-color: rgba(229,9,20,.30);
 }
 
-/* panel */
 .panel{
     margin-top: 16px;
     border-radius: 22px;
@@ -103,7 +100,6 @@
     font-size: 14px;
 }
 
-/* table-ish list */
 .table{
     padding: 8px 12px 12px;
 }
@@ -133,7 +129,6 @@
     text-align:right;
 }
 
-/* person cell */
 .who{
     display:flex;
     align-items:center;
@@ -165,7 +160,6 @@
     font-size: 13px;
 }
 
-/* actions */
 .actions{
     display:flex;
     gap: 10px;
@@ -204,7 +198,6 @@
     filter: brightness(1.06);
 }
 
-/* empty */
 .empty{
     margin: 10px 0 0;
     padding: 14px 12px;
@@ -214,7 +207,6 @@
     color: rgba(255,255,255,.70);
 }
 
-/* form */
 .form{ padding: 14px; }
 
 .grid{
@@ -261,7 +253,6 @@
     align-items:center;
 }
 
-/* primary button */
 .primary-btn{
     border:0;
     cursor:pointer;

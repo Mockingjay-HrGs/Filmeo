@@ -18,10 +18,6 @@ public class SeriesDetailsController {
         this.serieRepository = serieRepository;
     }
 
-    /**
-     * Détail d’une série
-     * URL : /serie/{id}
-     */
     @GetMapping("/serie/{id}")
     public String serieDetail(@PathVariable Long id, Model model) {
         Serie serie = serieRepository.findById(id)

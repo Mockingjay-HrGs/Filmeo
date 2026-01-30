@@ -23,9 +23,8 @@ public class Person {
     @Column(name = "death_date")
     private LocalDate deathDate;
 
-    private String gender; // 'M','F','X'
+    private String gender;
 
-    /* ✅ RELATION AVEC COUNTRY */
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
@@ -33,7 +32,6 @@ public class Person {
     @Column(name = "photo_url")
     private String photoUrl;
 
-    /* ================= GETTERS / SETTERS ================= */
 
     public Long getId() {
         return id;

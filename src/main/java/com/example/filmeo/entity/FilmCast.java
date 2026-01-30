@@ -23,8 +23,6 @@ public class FilmCast {
     @Column(name = "character_name", length = 120)
     private String characterName;
 
-    // ✅ GETTERS / SETTERS attendus par le controller
-
     public Film getFilm() { return film; }
     public void setFilm(Film film) { this.film = film; }
 

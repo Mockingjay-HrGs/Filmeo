@@ -23,7 +23,6 @@ public class Film {
     @Column(name = "poster_url")
     private String posterUrl;
 
-    // rating est DECIMAL en DB => BigDecimal pour éviter les erreurs Hibernate
     @Column(name = "rating")
     private BigDecimal rating;
 
